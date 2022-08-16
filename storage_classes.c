@@ -1,0 +1,4 @@
+//auto
+//static
+//register
+//extern

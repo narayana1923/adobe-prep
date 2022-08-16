@@ -113,10 +113,11 @@ void insertAfter()
     }
 }
 
-
-void reverse(){
-    Node* temp = head,*next = NULL, *prev = NULL;
-    while(temp!=NULL){
+void reverse()
+{
+    Node *temp = head, *next = NULL, *prev = NULL;
+    while (temp != NULL)
+    {
         next = temp->link;
         temp->link = prev;
         prev = temp;
@@ -125,9 +126,48 @@ void reverse(){
     head = prev;
 }
 
+int getLength(Node* temp){
+    int n = 0;
+    while (temp != NULL)
+    {
+        n++;
+        temp = temp->link;
+    }
+    return n;
+}
 
+int palindrome(Node *given)
+{
+    Node *temp = given;
+    int n = getLength(given);
+    for (int i = 0; i < n / 2; i++)
+    {
+        // palindrome know
+        temp = temp->link;
+    }
 
-
+    Node *temp2 = temp, *prev = NULL, *next = NULL, *cur = temp2;
+    //from middle to end we are reversing
+    while(temp2 != NULL)
+    {
+        next = temp2->link;
+        temp2->link = prev;
+        prev = temp2;
+        temp2 = next;
+    }
+    temp = given;
+    temp2 = prev;
+    while(temp != cur)// when it reaches middle we terminate
+    {
+        if(temp->data != temp2->data)
+        {
+            return 0;//auto type cast even if it is zero
+        }
+        temp = temp->link;
+        temp2 = temp2->link;
+    }
+    return 1;
+}
 
 void printList()
 {
@@ -140,51 +180,61 @@ void printList()
     printf("\n");
 }
 
-void get_index(){
-    int n=read();
-    Node* temp=head;
-    for(int i=0;i<n && temp!=NULL;i++){
-        temp=temp->link;
+void get_index()
+{
+    int n = read();
+    Node *temp = head;
+    for (int i = 0; i < n && temp != NULL; i++)
+    {
+        temp = temp->link;
     }
-    if(temp==NULL) {
+    if (temp == NULL)
+    {
         printf("index out of range");
     }
-    else{
-        printf("%d\n",temp->data);
+    else
+    {
+        printf("%d\n", temp->data);
     }
 }
-void last_index(){
-    int n=read();
-    int count=0;
-    Node* temp=head;
-    while(temp!=NULL){
-        temp=temp->link;
+void last_index()
+{
+    int n = read();
+    int count = 0;
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        temp = temp->link;
         count++;
     }
-    if(count<n){
+    if (count < n)
+    {
         printf("index out of range");
     }
-    else{
+    else
+    {
         temp = head;
-        for(int i=0;i<(count - (n+1)) && temp->link!=NULL;i++){
+        for (int i = 0; i < (count - (n + 1)) && temp->link != NULL; i++)
+        {
             temp = temp->link;
         }
-        printf("%d\n",temp->data);
+        printf("%d\n", temp->data);
     }
-
 }
 
-
-void swap(int* a, int* b){
+void swap(int *a, int *b)
+{
     int temp = *a;
-    *a=*b;
+    *a = *b;
     *b = temp;
 }
 
-void swapPair(){
-    Node* temp = head;
-    while(temp!=NULL && temp->link != NULL){
-        swap(&temp->data,&temp->link->data);
+void swapPair()
+{
+    Node *temp = head;
+    while (temp != NULL && temp->link != NULL)
+    {
+        swap(&temp->data, &temp->link->data);
         temp = temp->link->link;
     }
 }
@@ -200,7 +250,6 @@ int main()
     insert_at_ending();
     insert_at_ending();
     printList();
-    swapPair();
-    printList();
+    printf("%d",palindrome(head));
     return 0;
 }
